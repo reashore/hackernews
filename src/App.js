@@ -3,15 +3,19 @@ import './App.css';
 
 import list from './AppData.js';
 
+const isSearched = searchTerm => item => item.title.toLowerCase().includes(searchTerm.toLowerCase());
+
 class App extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            list: list
+            list: list,
+            searchTerm: ''
         };
 
         this.onDismiss = this.onDismiss.bind(this);
+        this.onSearchChange = this.onSearchChange.bind(this);
     }
 
     onDismiss(id) {
@@ -20,13 +24,39 @@ class App extends Component {
         this.setState({list: updatedList});
     }
 
+    onSearchChange(event) {
+        this.setState({searchTerm: event.target.value});
+    }
+
     render() {
+        const {searchTerm, list} = this.state;
         return (
             <div className="App">
-                <form>
-                    <input type="text"/>
-                </form>
-                {this.state.list.map(item =>
+                <Search value={searchTerm} onChange={this.onSearchChange}>Search</Search>
+                <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss}/>
+            </div>
+        );
+    }
+}
+
+class Search extends Component {
+    render() {
+        const {value, onChange, children} = this.props;
+        return (
+            <form>
+                {children}
+                <input type="text" onChange={onChange} value={value}/>
+            </form>
+        );
+    }
+}
+
+class Table extends Component {
+    render() {
+        const {list, pattern, onDismiss} = this.props;
+        return (
+            <div>
+                {list.filter(isSearched(pattern)).map(item =>
                     <div key={item.objectId}>
                         <span>
                             <a href={list.url}>{item.title}</a>
@@ -35,7 +65,7 @@ class App extends Component {
                         <span>{item.num_comments}</span>
                         <span>{item.points}</span>
                         <span>
-                            <button type="button" onClick={() => this.onDismiss(item.objectId)}>Dismiss</button>
+                            <button type="button" onClick={() => onDismiss(item.objectId)}>Dismiss</button>
                         </span>
                     </div>
                 )}
