@@ -18,6 +18,33 @@ class App extends Component {
         this.onSearchChange = this.onSearchChange.bind(this);
     }
 
+    static getDerivedStateFromProps(props, state) {
+        console.log("getDerivedStateFromProps");
+        return null;
+    }
+
+    componentDidMount() {
+        console.log("componentDidMount");
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log("shouldComponentUpdate");
+        return true;
+    }
+
+    getSnapshotBeforeUpdate(nextProps, nextState) {
+        console.log("getSnapshotBeforeUpdate");
+        return null;
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("componentDidUpdate");
+    }
+
+    componentWillUnmount() {
+        console.log("componentWillUnmount");
+    }
+    
     onDismiss(id) {
         const isNotId = item => item.objectId !== id;
         const updatedList = this.state.list.filter(isNotId);
