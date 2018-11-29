@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import './App.css';
 
 import list from './AppData.js';
-
-const isSearched = searchTerm => item => item.title.toLowerCase().includes(searchTerm.toLowerCase());
+import Search from './Search';
+import Table from './Table.js';
 
 class App extends Component {
     constructor(props) {
@@ -31,38 +31,15 @@ class App extends Component {
     render() {
         const {searchTerm, list} = this.state;
         return (
-            <div className="App">
-                <Search value={searchTerm} onChange={this.onSearchChange}>Search</Search>
+            <div className="page">
+                <div className="interactions">
+                    <Search value={searchTerm} onChange={this.onSearchChange}>Search</Search>
+                </div>
+                
                 <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss}/>
             </div>
         );
     }
 }
-
-const Search = ({value, onChange, children}) =>
-    <form>
-        {children}
-        <input type="text" value={value} onChange={onChange}/>
-    </form>;
-
-const Table = ({list, pattern, onDismiss}) =>
-    <div>
-        {list.filter(isSearched(pattern)).map(item =>
-            <div key={item.objectId}>
-                        <span>
-                            <a href={list.url}>{item.title}</a>
-                        </span>
-                <span>{item.author}</span>
-                <span>{item.num_comments}</span>
-                <span>{item.points}</span>
-                <span>
-                            <Button onClick={() => onDismiss(item.objectId)}>Dismiss</Button>
-                        </span>
-            </div>
-        )}
-    </div>;
-
-const Button = ({onClick, className = '', children}) =>
-    <button onClick={onClick} className={className} type='button'>{children}</button>;
     
 export default App;
