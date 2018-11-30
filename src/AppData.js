@@ -6,7 +6,7 @@ const list = [
         author: 'Jordan Walke',
         num_comments: '3',
         points: 4,
-        objectId: 0
+        objectID: 0
     },
     {
         title: 'Redux',
@@ -14,7 +14,7 @@ const list = [
         author: 'Dan Abramov, Andrew Clark',
         num_comments: '2',
         points: 5,
-        objectId: 1
+        objectID: 1
     },
 ];
 
