@@ -1,5 +1,5 @@
 export const DefaultQuery = 'redux';
-export const DefaultHitsPerPage = '10';
+export const DefaultHitsPerPage = '2';
 export const PathBase = 'https://hn.algolia.com/api/v1';
 export const PathSearch = '/search';
 export const ParamSearch = 'query=';

@@ -1,3 +1,4 @@
+
 import React, {Component} from 'react';
 import './App.css';
 import Search from './Search';
@@ -19,6 +20,7 @@ class App extends Component {
 
         this.state = {
             result: null,
+            searchKey: '',
             searchTerm: DefaultQuery
         };
 
@@ -29,44 +31,44 @@ class App extends Component {
         this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     }
 
-    static getDerivedStateFromProps(props, state) {
-        //console.log("getDerivedStateFromProps");
-        return null;
-    }
+    // static getDerivedStateFromProps(props, state) {
+    //     //console.log("getDerivedStateFromProps");
+    //     return null;
+    // }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     //console.log("shouldComponentUpdate");
+    //     return true;
+    // }
+
+    // getSnapshotBeforeUpdate(nextProps, nextState) {
+    //     //console.log("getSnapshotBeforeUpdate");
+    //     return null;
+    // }
+
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     //console.log("componentDidUpdate");
+    // }
+
+    // componentWillUnmount() {
+    //     //console.log("componentWillUnmount");
+    // }
+
+    // componentDidCatch(error, info) {
+    //     //console.log("componentDidCatch");
+    // }
 
     componentDidMount() {
         //console.log("componentDidMount");
         const {searchTerm} = this.state;
+        this.setState({searchKey: searchTerm});
         this.fetchSearchTopStories(searchTerm);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        //console.log("shouldComponentUpdate");
-        return true;
-    }
-
-    getSnapshotBeforeUpdate(nextProps, nextState) {
-        //console.log("getSnapshotBeforeUpdate");
-        return null;
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        //console.log("componentDidUpdate");
-    }
-
-    componentWillUnmount() {
-        //console.log("componentWillUnmount");
-    }
-
-    componentDidCatch(error, info) {
-        //console.log("componentDidCatch");
     }
     
     onDismiss(id) {
         const isNotId = item => item.objectID !== id;
         const updatedHits = this.state.result.hits.filter(isNotId);
         this.setState({
-            //result: Object.assign({}, this.state.result, {hits: updatedHits})
             result: {...this.state.result, hits: updatedHits}
         });
     }
@@ -75,39 +77,49 @@ class App extends Component {
         this.setState({searchTerm: event.target.value});
     }
 
-    setSearchTopStories(result) {
-        const {hits, page} = result;
-
-        const oldHits = page !== 0 ? this.state.results.hits : [];
-
-        const updatedHits = [...oldHits, ...hits];
-
-        this.setState({
-            result: {hits: updatedHits, page: page}
-        });
-    }
-
     onSearchSubmit(event) {
         const {searchTerm} = this.state;
+        this.setState({searchKey: searchTerm});
         this.fetchSearchTopStories(searchTerm);
         event.preventDefault();
     }
 
     fetchSearchTopStories(searchTerm, page = 0) {
-        let queryString = `?${ParamSearch}${searchTerm}`;
-        queryString += `&${ParamPage}${page}`;
-        queryString += `&${ParamHitsPerPage}${DefaultHitsPerPage}`;
+        try {
+            //console.log('fetchSearchTopStories');
+            let queryString = `${ParamHitsPerPage}${DefaultHitsPerPage}`;
+            queryString += `&${ParamSearch}${searchTerm}`;
+            queryString += `&${ParamPage}${page}`;
 
-        const url = `${PathBase}${PathSearch}${queryString}`;
-        console.log(url);
+            const url = `${PathBase}${PathSearch}?${queryString}`;
+            console.log(url);
 
-        fetch(url)
-            .then(response => response.json())
-            .then(result => this.setSearchTopStories(result))
-            .catch(error => error);
+            fetch(url)
+                .then(response => response.json())
+                .then(result => this.setSearchTopStories(result))
+                .catch(error => error);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    setSearchTopStories(result) {
+        try {
+            //console.log('setSearchTopStories');
+            const {hits, page} = result;
+            const oldHits = page !== 0 ? this.state.result.hits : [];
+            const updatedHits = [...oldHits, ...hits];
+            this.setState({
+                result: {hits: updatedHits, page}
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
     
     render() {
+        //console.log('render');
         const {searchTerm, result} = this.state;
         const page = (result && result.page) || 0;
         
