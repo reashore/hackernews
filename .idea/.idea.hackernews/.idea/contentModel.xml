@@ -4,6 +4,7 @@
     <e p="C:\ReactProjects\hackernews" t="IncludeFlat">
       <e p="node_modules" t="ExcludeRecursive">
         <e p="@types" t="IncludeRecursive" />
+        <e p="axios" t="IncludeRecursive" />
         <e p="react" t="IncludeRecursive" />
         <e p="react-dom" t="IncludeRecursive" />
         <e p="react-scripts" t="IncludeRecursive" />
