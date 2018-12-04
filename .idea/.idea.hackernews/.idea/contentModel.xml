@@ -8,6 +8,7 @@
         <e p="react" t="IncludeRecursive" />
         <e p="react-dom" t="IncludeRecursive" />
         <e p="react-scripts" t="IncludeRecursive" />
+        <e p="react-test-renderer" t="IncludeRecursive" />
       </e>
     </e>
     <e p="C:\Users\freashore\.Rider2018.2\config\extensions" t="IncludeRecursive" />
