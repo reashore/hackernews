@@ -13,7 +13,7 @@ describe('Button Tests', () => {
 
     test('has a valid snapshot', () => {
         const component = renderer.create(<Button>Button</Button>);
-        const tree = component.ToJSON();
-        expect(tree).ToMatchSnapshot();
+        const tree = component.toJSON();
+        expect(tree).toMatchSnapshot();
     });
 });

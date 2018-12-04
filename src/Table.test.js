@@ -20,7 +20,7 @@ describe('Table Tests', () => {
 
     test('has a valid snapshot', () => {
         const component = renderer.create(<Table {...props}/>);
-        const tree = component.ToJSON();
-        expect(tree).ToMatchSnapshot();
+        const tree = component.toJSON();
+        expect(tree).toMatchSnapshot();
     });
 });
