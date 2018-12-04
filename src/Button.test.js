@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
-import App from './App';
-import Search from "./Search";
+import Button from "./Button";
 
 describe('Button Tests', () => {
 
