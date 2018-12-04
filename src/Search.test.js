@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import App from './App';
 import Search from "./Search";
 
-describe('App Tests', () => {
+describe('Search Tests', () => {
 
     it('renders without crashing', () => {
         const div = document.createElement('div');
@@ -17,5 +17,4 @@ describe('App Tests', () => {
         const tree = component.ToJSON();
         expect(tree).ToMatchSnapshot();
     });
-
 });

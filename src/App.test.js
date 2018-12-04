@@ -15,6 +15,5 @@ describe('App Tests', () => {
         const component = renderer.create(<App />);
         const tree = component.ToJSON();
         expect(tree).ToMatchSnapshot();
-    });
-    
+    });    
 });
